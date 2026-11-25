@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+  <meta name="description" content="JF Import Uberlândia — Moda urbana, sneakers importados e acessórios selecionados."/>
+  <meta name="theme-color" content="#0a0a0a"/>
+  <title>JF Import Uberlândia | Roupas, Sneakers e Acessórios</title>
+  <meta property="og:title" content="JF Import Uberlândia"/>
+  <meta property="og:description" content="Moda urbana, produtos importados e novidades selecionadas."/>
+  <meta property="og:type" content="website"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    /* ============================================================
+       TOKENS
+    ============================================================ */
+    :root {
+      --black:       #060608;
+      --dark:        #0e0e10;
+      --card:        #121214;
+      --card2:       #18181b;
+      --border:      #252528;
+      --border2:     #2e2e33;
+      --gold:        #c9a84c;
+      --gold2:       #e8c96a;
+      --gold3:       #f5dfa0;
+      --gold-dim:    rgba(201,168,76,.14);
+      --gold-glow:   rgba(201,168,76,.22);
+      --white:       #f0f0f2;
+      --gray:        #808088;
+      --gray2:       #b0b0ba;
+      --wa:          #25d366;
+      --wa-dk:       #1aab52;
+      --wa-glow:     rgba(37,211,102,.30);
+      --r-sm: 10px; --r-md: 16px; --r-lg: 22px; --r-xl: 32px;
+      --font-head: 'Cinzel', serif;
+      --font-sub:  'Playfair Display', serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+      --ease: cubic-bezier(.4,0,.2,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--black);
+      color: var(--white);
+      min-height: 100dvh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { max-width: 100%; display: block; }
+    a   { text-decoration: none; }
+
+    /* ============================================================
+       CANVAS PARTICLES BG
+    ============================================================ */
+    #particles-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: .55;
+    }
+
+    /* ============================================================
+       RADIAL GLOW BACKDROP
+    ============================================================ */
+    .backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 90% 55% at 50% -5%,  rgba(201,168,76,.09) 0%, transparent 68%),
+        radial-gradient(ellipse 55% 35% at 85% 90%,  rgba(201,168,76,.05) 0%, transparent 55%),
+        radial-gradient(ellipse 40% 30% at 10% 70%,  rgba(201,168,76,.04) 0%, transparent 50%);
+    }
+
+    /* ============================================================
+       LAYOUT
+    ============================================================ */
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 0 18px 56px;
+    }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding-top: 44px;
+      padding-bottom: 4px;
+    }
+
+    /* ---- Logo ---- */
+    .logo-wrap {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .logo-bg-glow {
+      position: absolute;
+      inset: -20px;
+      background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(201,168,76,.18), transparent 70%);
+      border-radius: 50%;
+      animation: glow-pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes glow-pulse {
+      0%,100% { opacity: .6; transform: scale(1); }
+      50%      { opacity: 1;  transform: scale(1.08); }
+    }
+
+    .logo-ring {
+      position: relative;
+      width: 118px;
+      height: 118px;
+      border-radius: 50%;
+      padding: 2.5px;
+      background: conic-gradient(from 0deg, var(--gold), var(--gold3), var(--gold2), #fff6, var(--gold), var(--gold3), var(--gold));
+      animation: ring-spin 7s linear infinite;
+    }
+
+    @keyframes ring-spin { to { transform: rotate(360deg); } }
+
+    .logo-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 2px solid #0a0a0a;
+    }
+
+    .logo-inner img {
+      width: 90%;
+      height: 90%;
+      object-fit: contain;
+      /* Remove white bg from logo */
+      mix-blend-mode: lighten;
+    }
+
+    /* Fallback monogram if logo fails */
+    .logo-monogram {
+      display: none;
+      font-family: var(--font-head);
+      font-size: 34px;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .logo-inner img:not([src]), .logo-inner img[src=""] ~ .logo-monogram { display: flex; }
+
+    /* Online dot */
+    .logo-dot {
+      position: absolute;
+      bottom: 5px; right: 5px;
+      width: 20px; height: 20px;
+      background: var(--wa);
+      border-radius: 50%;
+      border: 2.5px solid var(--black);
+      box-shadow: 0 0 10px var(--wa-glow);
+    }
+    .logo-dot::after {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      background: rgba(255,255,255,.45);
+      border-radius: 50%;
+      animation: dot-pulse 2.2s ease-in-out infinite;
+    }
+    @keyframes dot-pulse {
+      0%,100% { opacity: 0; transform: scale(1); }
+      50%      { opacity: 1; transform: scale(1.4); }
+    }
+
+    /* ---- Brand name ---- */
+    .brand-name {
+      font-family: var(--font-head);
+      font-size: 21px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 6px;
+      position: relative;
+    }
+
+    /* Gold shimmer sweep */
+    .brand-name::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, transparent 30%, rgba(255,220,120,.18) 50%, transparent 70%);
+      background-size: 200% 100%;
+      animation: text-shimmer 4s ease-in-out infinite;
+      border-radius: 4px;
+      pointer-events: none;
+    }
+    @keyframes text-shimmer {
+      0%,100% { background-position: -100% 0; }
+      50%      { background-position: 200% 0; }
+    }
+
+    .brand-sub {
+      font-family: var(--font-head);
+      font-size: 10.5px;
+      font-weight: 400;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, var(--gold), var(--gold2), var(--gold));
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gold-flow 4s linear infinite;
+      display: block;
+      margin-top: 5px;
+    }
+    @keyframes gold-flow {
+      0%   { background-position: 0% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    .tagline {
+      font-family: var(--font-sub);
+      font-size: 15px;
+      font-weight: 600;
+      font-style: italic;
+      color: var(--gray2);
+      line-height: 1.5;
+      margin-bottom: 10px;
+      max-width: 310px;
+    }
+
+    .description {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--gray);
+      line-height: 1.65;
+      max-width: 320px;
+      margin-bottom: 30px;
+    }
+
+    /* ---- Location pill ---- */
+    .location-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      color: var(--gray2);
+      background: var(--card);
+      border: 1px solid var(--border2);
+      border-radius: 999px;
+      padding: 7px 16px;
+      margin-bottom: 30px;
+    }
+    .location-pill svg { color: var(--gold); flex-shrink: 0; }
+
+    /* ============================================================
+       DIVIDER
+    ============================================================ */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-head);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin: 26px 0 14px;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border2), transparent);
+    }
+    .divider-diamond {
+      width: 5px; height: 5px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+      opacity: .6;
+    }
+
+    /* ============================================================
+       BUTTONS — BASE
+    ============================================================ */
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 16px 20px;
+      border-radius: var(--r-md);
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 600;
+      transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s;
+      outline: none;
+      position: relative;
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      min-height: 60px;
+    }
+
+    /* Shine sweep on hover */
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -75%;
+      width: 50%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.07), transparent);
+      transform: skewX(-20deg);
+      transition: left .5s var(--ease);
+      pointer-events: none;
+    }
+    .btn:hover::before { left: 150%; }
+
+    .btn:active { transform: scale(.97); }
+
+    .btn-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex: 1;
+    }
+
+    .btn-icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .btn-text { display: flex; flex-direction: column; align-items: flex-start; }
+
+    .btn-title {
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .btn-sub {
+      font-size: 11.5px;
+      font-weight: 400;
+      opacity: .72;
+      margin-top: 2px;
+      line-height: 1.3;
+    }
+
+    .btn-arr {
+      flex-shrink: 0;
+      transition: transform .2s;
+    }
+    .btn:hover .btn-arr { transform: translateX(4px); }
+
+    /* ---- WhatsApp HERO ---- */
+    .btn-wa-hero {
+      background: linear-gradient(135deg, #22c55e 0%, #16a34a 55%, #15803d 100%);
+      color: #fff;
+      padding: 22px 24px;
+      border-radius: var(--r-lg);
+      min-height: 76px;
+      box-shadow:
+        0 0 0 1px rgba(37,211,102,.25),
+        0 8px 32px rgba(34,197,94,.30),
+        0 2px 8px rgba(0,0,0,.5);
+      margin-bottom: 10px;
+    }
+    .btn-wa-hero:hover {
+      transform: translateY(-3px) scale(1.01);
+      box-shadow:
+        0 0 0 1px rgba(37,211,102,.4),
+        0 16px 44px rgba(34,197,94,.40),
+        0 4px 12px rgba(0,0,0,.5);
+    }
+    .btn-wa-hero .btn-icon {
+      background: rgba(255,255,255,.18);
+      width: 44px; height: 44px;
+      border-radius: 13px;
+    }
+    .btn-wa-hero .btn-title { font-size: 17px; }
+
+    /* Animated border on WA btn */
+    .btn-wa-hero::after {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: calc(var(--r-lg) + 2px);
+      background: conic-gradient(from var(--angle, 0deg), var(--wa-glow), transparent 40%, var(--wa-glow) 60%, transparent);
+      z-index: -1;
+      animation: border-spin 3s linear infinite;
+      opacity: .6;
+    }
+    @property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+    @keyframes border-spin { to { --angle: 360deg; } }
+
+    /* Pulse ring */
+    .wa-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: var(--r-lg);
+      border: 2px solid rgba(37,211,102,.4);
+      animation: wa-ring 2.5s ease-out infinite;
+      pointer-events: none;
+    }
+    @keyframes wa-ring {
+      0%   { opacity: .8; transform: scale(1); }
+      100% { opacity: 0;  transform: scale(1.07); }
+    }
+
+    /* ---- Gold outline ---- */
+    .btn-gold {
+      background: linear-gradient(135deg, rgba(201,168,76,.08), rgba(201,168,76,.03));
+      color: var(--gold2);
+      border: 1.5px solid var(--gold);
+      box-shadow: 0 0 24px rgba(201,168,76,.08);
+    }
+    .btn-gold:hover {
+      background: linear-gradient(135deg, rgba(201,168,76,.14), rgba(201,168,76,.06));
+      box-shadow: 0 4px 28px rgba(201,168,76,.18), 0 0 0 1px var(--gold);
+    }
+    .btn-gold .btn-icon { background: var(--gold-dim); }
+
+    /* ---- Dark card ---- */
+    .btn-dark {
+      background: var(--card);
+      color: var(--white);
+      border: 1px solid var(--border2);
+    }
+    .btn-dark:hover {
+      background: var(--card2);
+      border-color: #3a3a40;
+      box-shadow: 0 4px 20px rgba(0,0,0,.3);
+    }
+    .btn-dark .btn-icon { background: #1e1e22; }
+
+    /* ---- WA secondary ---- */
+    .btn-wa-sm {
+      background: var(--card);
+      color: var(--wa);
+      border: 1.5px solid rgba(37,211,102,.25);
+    }
+    .btn-wa-sm:hover {
+      background: rgba(37,211,102,.07);
+      border-color: var(--wa);
+      box-shadow: 0 4px 20px rgba(37,211,102,.12);
+    }
+    .btn-wa-sm .btn-icon { background: rgba(37,211,102,.12); }
+
+    /* ---- Instagram ---- */
+    .btn-ig {
+      background: linear-gradient(135deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+      color: #fff;
+      border: none;
+    }
+    .btn-ig:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(193,53,132,.35);
+    }
+    .btn-ig .btn-icon { background: rgba(255,255,255,.18); }
+
+    .btn + .btn { margin-top: 10px; }
+
+    /* ============================================================
+       INFO STRIPS
+    ============================================================ */
+    .strips {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 24px 0;
+    }
+    .strip {
+      background: var(--card);
+      border: 1px solid var(--border2);
+      border-radius: var(--r-md);
+      padding: 18px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 10px;
+      transition: transform .2s var(--ease), box-shadow .2s;
+    }
+    .strip:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,.3);
+    }
+    .strip.g {
+      border-color: var(--gold);
+      background: linear-gradient(135deg, rgba(201,168,76,.07), rgba(201,168,76,.02));
+    }
+    .strip-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: var(--gold-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold2);
+    }
+    .strip.g .strip-icon { background: var(--gold-dim); }
+    .strip-title {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gold2);
+      line-height: 1.3;
+    }
+    .strip-sub {
+      font-size: 11px;
+      color: var(--gray);
+      line-height: 1.4;
+    }
+
+    /* ============================================================
+       PRODUCTS GRID
+    ============================================================ */
+    .products-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .p-card {
+      background: var(--card);
+      border: 1px solid var(--border2);
+      border-radius: var(--r-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s;
+      position: relative;
+    }
+    .p-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 12px 32px rgba(0,0,0,.4), 0 0 0 1px var(--border2);
+      border-color: #3a3a40;
+    }
+
+    .p-img {
+      aspect-ratio: 1/1;
+      background: #111113;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .p-img img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* Placeholder */
+    .p-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--gray);
+      width: 100%;
+      height: 100%;
+    }
+    .p-placeholder svg { opacity: .3; }
+    .p-placeholder span {
+      font-size: 9.5px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      opacity: .45;
+    }
+
+    .p-badge {
+      position: absolute;
+      top: 8px; left: 8px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: var(--black);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 999px;
+    }
+
+    .p-info {
+      padding: 12px 12px 10px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .p-cat {
+      font-family: var(--font-head);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+    .p-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.35;
+      flex: 1;
+      margin-bottom: 10px;
+    }
+    .p-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      background: rgba(37,211,102,.09);
+      color: var(--wa);
+      border: 1px solid rgba(37,211,102,.22);
+      border-radius: 9px;
+      padding: 10px 8px;
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .18s, border-color .18s, box-shadow .18s, transform .15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .p-btn:hover {
+      background: rgba(37,211,102,.16);
+      border-color: var(--wa);
+      box-shadow: 0 4px 14px rgba(37,211,102,.12);
+    }
+    .p-btn:active { transform: scale(.96); }
+
+    /* ============================================================
+       WHY SECTION
+    ============================================================ */
+    .why {
+      background: linear-gradient(135deg, var(--card), var(--card2));
+      border: 1px solid var(--border2);
+      border-radius: var(--r-lg);
+      padding: 26px 22px;
+      margin: 24px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .why::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 180px; height: 180px;
+      background: radial-gradient(circle, rgba(201,168,76,.08), transparent 70%);
+      pointer-events: none;
+    }
+
+    .why-title {
+      font-family: var(--font-head);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+      text-align: center;
+      margin-bottom: 22px;
+      letter-spacing: .5px;
+    }
+    .why-title em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .why-list { display: flex; flex-direction: column; gap: 18px; }
+
+    .why-item { display: flex; align-items: flex-start; gap: 14px; }
+
+    .why-ic {
+      width: 42px; height: 42px;
+      border-radius: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .why-ic.g  { background: var(--gold-dim); color: var(--gold2); }
+    .why-ic.wa { background: rgba(37,211,102,.12); color: var(--wa); }
+    .why-ic.b  { background: rgba(96,165,250,.12); color: #60a5fa; }
+
+    .why-item-title { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 3px; }
+    .why-item-desc  { font-size: 12.5px; color: var(--gray); line-height: 1.55; }
+
+    /* ============================================================
+       CALLOUT
+    ============================================================ */
+    .callout {
+      background: linear-gradient(135deg, rgba(201,168,76,.09), rgba(201,168,76,.03));
+      border: 1px solid rgba(201,168,76,.22);
+      border-radius: var(--r-md);
+      padding: 20px 22px;
+      text-align: center;
+      margin: 10px 0 24px;
+    }
+    .callout strong {
+      font-family: var(--font-sub);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--gold2);
+      display: block;
+      margin-bottom: 6px;
+    }
+    .callout p { font-size: 13px; color: var(--gray2); line-height: 1.6; }
+
+    /* ============================================================
+       STORE CARD
+    ============================================================ */
+    .store-card {
+      background: var(--card);
+      border: 1px solid var(--border2);
+      border-radius: var(--r-md);
+      padding: 20px;
+      margin: 24px 0 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .sc-row { display: flex; align-items: flex-start; gap: 14px; }
+    .sc-icon {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      background: var(--gold-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--gold2);
+    }
+    .sc-label {
+      font-family: var(--font-head);
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+    .sc-value { font-size: 13px; color: var(--gray2); line-height: 1.55; }
+    .sc-hr { height: 1px; background: var(--border); }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 22px;
+      border-top: 1px solid var(--border);
+    }
+    .footer-crown { color: var(--gold); font-size: 20px; margin-bottom: 6px; display: block; }
+    .footer-name {
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray);
+      letter-spacing: 1px;
+    }
+    .footer-name span { color: var(--gold); }
+    .footer-copy { font-size: 11px; color: #48484f; margin-top: 5px; }
+
+    /* ============================================================
+       RIPPLE
+    ============================================================ */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      animation: ripple-anim .65s linear;
+      background: rgba(255,255,255,.12);
+      pointer-events: none;
+    }
+    @keyframes ripple-anim { to { transform: scale(4); opacity: 0; } }
+
+    /* ============================================================
+       REVEAL ANIMATIONS
+    ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity .55s var(--ease), transform .55s var(--ease);
+    }
+    .reveal.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .d1 { transition-delay: .05s; }
+    .d2 { transition-delay: .10s; }
+    .d3 { transition-delay: .15s; }
+    .d4 { transition-delay: .20s; }
+    .d5 { transition-delay: .25s; }
+    .d6 { transition-delay: .30s; }
+    .d7 { transition-delay: .35s; }
+    .d8 { transition-delay: .40s; }
+    .d9 { transition-delay: .45s; }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (min-width: 520px) {
+      .page { padding-left: 24px; padding-right: 24px; }
+    }
+    @media (min-width: 720px) {
+      .page {
+        border-left: 1px solid var(--border);
+        border-right: 1px solid var(--border);
+        padding-top: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Particle canvas -->
+<canvas id="particles-canvas"></canvas>
+<div class="backdrop"></div>
+
+<div class="page">
+
+  <!-- ===================================================
+       HERO
+  =================================================== -->
+  <section class="hero">
+
+    <div class="logo-wrap reveal d1">
+      <div class="logo-bg-glow"></div>
+      <div class="logo-ring">
+        <div class="logo-inner">
+          <img src="logo.png" alt="JF Import Uberlândia" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <span class="logo-monogram" style="display:none">JF</span>
+        </div>
+      </div>
+      <div class="logo-dot" title="Atendimento ativo"></div>
+    </div>
+
+    <h1 class="brand-name reveal d2">
+      JF Import Uberlândia
+      <span class="brand-sub">Roupas &amp; Acessórios</span>
+    </h1>
+
+    <p class="tagline reveal d3">Roupas, sneakers e acessórios para elevar seu estilo.</p>
+
+    <p class="description reveal d4">
+      Moda urbana, produtos importados e novidades selecionadas.
+      Compre online ou visite nossa loja em Uberlândia.
+    </p>
+
+    <div class="location-pill reveal d5">
+      <!-- Map pin icon -->
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/>
+        <circle cx="12" cy="10" r="3"/>
+      </svg>
+      Uberlândia — MG &nbsp;·&nbsp; Atendemos todo o Brasil
+    </div>
+
+  </section>
+
+  <!-- ===================================================
+       CTA PRINCIPAL — WHATSAPP
+  =================================================== -->
+  <a
+    href="https://wa.me/553491830555?text=Ol%C3%A1%2C%20vi%20a%20p%C3%A1gina%20da%20JF%20Import%20e%20gostaria%20de%20consultar%20os%20produtos%20dispon%C3%ADveis."
+    class="btn btn-wa-hero reveal d6"
+    target="_blank" rel="noopener noreferrer"
+    aria-label="Comprar pelo WhatsApp"
+  >
+    <div class="wa-ring"></div>
+    <div class="btn-left">
+      <div class="btn-icon">
+        <!-- WhatsApp icon -->
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.306A9.933 9.933 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.182a8.164 8.164 0 01-4.355-1.253l-.312-.186-3.252.853.869-3.169-.204-.325A8.182 8.182 0 1120.182 12 8.192 8.192 0 0112 20.182z"/>
+        </svg>
+      </div>
+      <div class="btn-text">
+        <span class="btn-title">Comprar pelo WhatsApp</span>
+        <span class="btn-sub">Fale agora · Atendimento rápido</span>
+      </div>
+    </div>
+    <!-- Arrow right icon -->
+    <svg class="btn-arr" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14M12 5l7 7-7 7"/>
+    </svg>
+  </a>
+
+  <!-- ===================================================
+       LANÇAMENTOS
+  =================================================== -->
+  <div class="divider reveal d7">
+    <div class="divider-diamond"></div>
+    Lançamentos
+    <div class="divider-diamond"></div>
+  </div>
+
+  <a
+    href="https://wa.me/553491830555?text=Ol%C3%A1%2C%20quero%20ver%20as%20novidades%20da%20JF%20Import!"
+    class="btn btn-gold reveal d7"
+    target="_blank" rel="noopener noreferrer"
+  >
+    <div class="btn-left">
+      <div class="btn-icon">
+        <!-- Sparkles / star icon -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+      </div>
+      <div class="btn-text">
+        <span class="btn-title">Ver novidades</span>
+        <span class="btn-sub">Peças recém-chegadas e lançamentos</span>
+      </div>
+    </div>
+    <svg class="btn-arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14M12 5l7 7-7 7"/>
+    </svg>
+  </a>
+
+  <!-- ===================================================
+       CATEGORIAS
+  =================================================== -->
+  <div class="divider reveal d8">
+    <div class="divider-diamond"></div>
+    Categorias
+    <div class="divider-diamond"></div>
+  </div>
+
+  <a
+    href="https://wa.me/553491830555?text=Ol%C3%A1%2C%20quero%20ver%20os%20sneakers%20dispon%C3%ADveis!"
+    class="btn btn-dark reveal d8"
+    target="_blank" rel="noopener noreferrer"
+  >
+    <div class="btn-left">
+      <div class="btn-icon">
+        <!-- Shoe / sneaker icon -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 18l2-6h8l5 4H3a1 1 0 01-1-1v1z"/>
+          <path d="M6 12V9a4 4 0 014-4h1l3 7"/>
+          <path d="M17 16l3-1.5"/>
+        </svg>
+      </div>
+      <div class="btn-text">
+        <span class="btn-title">Conhecer os sneakers</span>
+        <span class="btn-sub">Tênis importados e streetwear</span>
+      </div>
+    </div>
+    <svg class="btn-arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14M12 5l7 7-7 7"/>
+    </svg>
+  </a>
+
+  <a
+    href="https://wa.me/553491830555?text=Ol%C3%A1%2C%20quero%20ver%20as%20roupas%20e%20camisetas%20dispon%C3%ADveis!"
+    class="btn btn-dark reveal d9"
+    target="_blank" rel="noopener noreferrer"
+  >
+    <div class="btn-left">
+      <div class="btn-icon">
+        <!-- Shirt icon -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/>
+        </svg>
+      </div>
+      <div class="btn-text">
+        <span class="btn-title">Ver roupas e camisetas</span>
+        <span class="btn-sub">Importadas, masculinas e urbanas</span>
+      </div>
+    </div>
+    <svg class="btn-arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14M12 5l7 7-7 7"/>
+    </svg>
+  </a>
+
+  <!-- ===================================================
+       BADGES
+  =================================================== -->
+  <div class="strips reveal">
+    <div class="strip g">
+      <div class="strip-icon">
+        <!-- Truck icon -->
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1" y="3" width="15" height="13" rx="1"/>
+          <path d="M16 8h4l3 3v5h-7V8z"/>
+          <circle cx="5.5" cy="18.5" r="2.5"/>
+          <circle cx="18.5" cy="18.5" r="2.5"/>
+        </svg>
+      </div>
+      <div class="strip-title">Enviamos para<br>todo o Brasil</div>
+      <div class="strip-sub">Consulte frete pelo WhatsApp</div>
+    </div>
+    <div class="strip g">
+      <div class="strip-icon">
+        <!-- Credit card icon -->
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+          <line x1="1" y1="10" x2="23" y2="10"/>
+        </svg>
+      </div>
+      <div class="strip-title">Parcele em até<br>3x sem juros</div>
+      <div class="strip-sub">Diversas formas de pagamento</div>
+    </div>
+  </div>
+
+  <!-- ===================================================
+       DESTAQUES DA SEMANA
+  =================================================== -->
+  <div class="divider reveal">
+    <div class="divider-diamond"></div>
+    Destaques da Semana
+    <div class="divider-diamond"></div>
+  </div>
+
+  <!--
+    ======================================================
+    PRODUTOS EDITÁVEIS — como preencher:
+    1. Substitua <div class="p-placeholder"> por <img src="foto.jpg" alt="nome">
+    2. Troque "Sneaker / Camiseta / Acessório / Roupa" pela categoria real
+    3. Troque "Nome do produto aqui" pelo nome real
+    4. Edite o texto após ?text= na URL de cada .p-btn para personalizar a msg no WhatsApp
+    ======================================================
+  -->
+  <div class="products-grid reveal">
+
+    <!-- Produto 1 -->
+    <div class="p-card">
+      <div class="p-img">
+        <!-- <img src="produto1.jpg" alt="Nome do produto 1"> -->
+        <div class="p-placeholder">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          <span>Adicionar foto</span>
+        </div>
+        <span class="p-badge">Novo</span>
+      </div>
+      <div class="p-info">
+        <div class="p-cat">Sneaker</div>
+        <div class="p-name">Nome do produto aqui</div>
+        <a href="https://wa.me/553491830555?text=Ol%C3%A1%2C%20quero%20consultar%20a%20disponibilidade%20do%20produto%201!" class="p-btn" target="_blank" rel="noopener noreferrer">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.306A9.933 9.933 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.182a8.164 8.164 0 01-4.355-1.253l-.312-.186-3.252.853.869-3.169-.204-.325A8.182 8.182 0 1120.182 12 8.192 8.192 0 0112 20.182z"/></svg>
+          Consultar disponibilidade
+        </a>
+      </div>
+    </div>
+
+    <!-- Produto 2 -->
+    <div class="p-card">
+      <div class="p-img">
+        <!-- <img src="produto2.jpg" alt="Nome do produto 2"> -->
+        <div class="p-placeholder">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          <span>Adicionar foto</span>
+        </div>
+        <span class="p-badge">Destaque</span>
+      </div>
+      <div class="p-info">
+        <div class="p-cat">Camiseta</div>
+        <div class="p-name">Nome do produto aqui</div>
+        <a href="https://wa.me/553491830555?text=Ol%C3%A1%2C%20quero%20consultar%20a%20disponibilidade%20do%20produto%202!" class="p-btn" target="_blank" rel="noopener noreferrer">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.306A9.933 9.933 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.182a8.164 8.164 0 01-4.355-1.253l-.312-.186-3.252.853.869-3.169-.204-.325A8.182 8.182 0 1120.182 12 8.192 8.192 0 0112 20.182z"/></svg>
+          Consultar disponibilidade
+        </a>
+      </div>
+    </div>
+
+    <!-- Produto 3 -->
+    <div class="p-card">
+      <div class="p-img">
+        <!-- <img src="produto3.jpg" alt="Nome do produto 3"> -->
+        <div class="p-placeholder">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          <span>Adicionar foto</span>
+        </div>
+      </div>
+      <div class="p-info">
+        <div class="p-cat">Acessório</div>
+        <div class="p-name">Nome do produto aqui</div>
+        <a href="https://wa.me/553491830555?text=Ol%C3%A1%2C%20quero%20consultar%20a%20disponibilidade%20do%20produto%203!" class="p-btn" target="_blank" rel="noopener noreferrer">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.306A9.933 9.933 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.182a8.164 8.164 0 01-4.355-1.253l-.312-.186-3.252.853.869-3.169-.204-.325A8.182 8.182 0 1120.182 12 8.192 8.192 0 0112 20.182z"/></svg>
+          Consultar disponibilidade
+        </a>
+      </div>
+    </div>
+
+    <!-- Produto 4 -->
+    <div class="p-card">
+      <div class="p-img">
+        <!-- <img src="produto4.jpg" alt="Nome do produto 4"> -->
+        <div class="p-placeholder">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          <span>Adicionar foto</span>
+        </div>
+      </div>
+      <div class="p-info">
+        <div class="p-cat">Roupa</div>
+        <div class="p-name">Nome do produto aqui</div>
+        <a href="https://wa.me/553491830555?text=Ol%C3%A1%2C%20quero%20consultar%20a%20disponibilidade%20do%20produto%204!" class="p-btn" target="_blank" rel="noopener noreferrer">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.306A9.933 9.933 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.182a8.164 8.164 0 01-4.355-1.253l-.312-.186-3.252.853.869-3.169-.204-.325A8.182 8.182 0 1120.182 12 8.192 8.192 0 0112 20.182z"/></svg>
+          Consultar disponibilidade
+        </a>
+      </div>
+    </div>
+
+  </div><!-- /products-grid -->
+
+  <!-- ===================================================
+       POR QUE COMPRAR
+  =================================================== -->
+  <div class="why reveal">
+    <div class="why-title">Por que comprar com a <em>JF Import</em>?</div>
+    <div class="why-list">
+      <div class="why-item">
+        <div class="why-ic g">
+          <!-- Diamond / gem icon -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/>
+            <line x1="12" y1="22" x2="12" y2="2"/>
+            <polyline points="2 8.5 12 15 22 8.5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="why-item-title">Produtos selecionados</div>
+          <div class="why-item-desc">Peças importadas e coleções urbanas escolhidas a dedo para quem quer se destacar.</div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-ic wa">
+          <!-- Truck icon -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="3" width="15" height="13" rx="1"/>
+            <path d="M16 8h4l3 3v5h-7V8z"/>
+            <circle cx="5.5" cy="18.5" r="2.5"/>
+            <circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="why-item-title">Envio para todo o Brasil</div>
+          <div class="why-item-desc">Você não precisa estar em Uberlândia para comprar. Entregamos onde você estiver.</div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-ic b">
+          <!-- Message / chat icon -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="why-item-title">Atendimento pelo WhatsApp</div>
+          <div class="why-item-desc">Tire dúvidas, consulte tamanhos e finalize sua compra sem complicação.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================
+       CALLOUT
+  =================================================== -->
+  <div class="callout reveal">
+    <strong>Seu próximo destaque começa aqui.</strong>
+    <p>Escolha sua peça e fale com nosso time. Novidades, sneakers e estilo urbano, sempre à disposição.</p>
+  </div>
+
+  <!-- ===================================================
+       ATENDIMENTO
+  =================================================== -->
+  <div class="divider reveal">
+    <div class="divider-diamond"></div>
+    Atendimento
+    <div class="divider-diamond"></div>
+  </div>
+
+  <a
+    href="https://wa.me/553491830555?text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20vendedor%20da%20JF%20Import!"
+    class="btn btn-wa-sm reveal"
+    target="_blank" rel="noopener noreferrer"
+  >
+    <div class="btn-left">
+      <div class="btn-icon">
+        <!-- Headset / support icon -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 18v-6a9 9 0 0118 0v6"/>
+          <path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/>
+        </svg>
+      </div>
+      <div class="btn-text">
+        <span class="btn-title">Falar com um vendedor</span>
+        <span class="btn-sub">Consulte tamanhos e disponibilidade</span>
+      </div>
+    </div>
+    <svg class="btn-arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14M12 5l7 7-7 7"/>
+    </svg>
+  </a>
+
+  <!-- ===================================================
+       LOJA FÍSICA
+  =================================================== -->
+  <div class="divider reveal">
+    <div class="divider-diamond"></div>
+    Loja Física
+    <div class="divider-diamond"></div>
+  </div>
+
+  <div class="store-card reveal">
+    <div class="sc-row">
+      <div class="sc-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+      </div>
+      <div>
+        <div class="sc-label">Endereço</div>
+        <div class="sc-value">Av. Serra do Mar, 1115<br>Bairro São Jorge — Uberlândia, MG</div>
+      </div>
+    </div>
+    <div class="sc-hr"></div>
+    <div class="sc-row">
+      <div class="sc-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+      </div>
+      <div>
+        <div class="sc-label">Horário de funcionamento</div>
+        <div class="sc-value">Seg – Sex: 9h às 19h<br>Sábado: 9h às 16h</div>
+      </div>
+    </div>
+  </div>
+
+  <a
+    href="https://www.google.com/maps/search/?api=1&query=Avenida+Serra+do+Mar+1115+São+Jorge+Uberlândia+MG"
+    class="btn btn-dark reveal"
+    target="_blank" rel="noopener noreferrer"
+  >
+    <div class="btn-left">
+      <div class="btn-icon">
+        <!-- Map icon -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/>
+          <line x1="9" y1="3" x2="9" y2="18"/>
+          <line x1="15" y1="6" x2="15" y2="21"/>
+        </svg>
+      </div>
+      <div class="btn-text">
+        <span class="btn-title">Visitar loja física</span>
+        <span class="btn-sub">Ver no mapa · Av. Serra do Mar, 1115</span>
+      </div>
+    </div>
+    <svg class="btn-arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14M12 5l7 7-7 7"/>
+    </svg>
+  </a>
+
+  <!-- ===================================================
+       INSTAGRAM
+  =================================================== -->
+  <div class="divider reveal">
+    <div class="divider-diamond"></div>
+    Instagram
+    <div class="divider-diamond"></div>
+  </div>
+
+  <a
+    href="https://www.instagram.com/jfimportuberlandia"
+    class="btn btn-ig reveal"
+    target="_blank" rel="noopener noreferrer"
+  >
+    <div class="btn-left">
+      <div class="btn-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+        </svg>
+      </div>
+      <div class="btn-text">
+        <span class="btn-title">Seguir no Instagram</span>
+        <span class="btn-sub">@jfimportuberlandia</span>
+      </div>
+    </div>
+    <svg class="btn-arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14M12 5l7 7-7 7"/>
+    </svg>
+  </a>
+
+  <!-- ===================================================
+       FOOTER
+  =================================================== -->
+  <footer class="footer reveal">
+    <span class="footer-crown">♛</span>
+    <div class="footer-name"><span>JF</span> Import Uberlândia</div>
+    <div class="footer-copy">JF Roupas &amp; Acessórios · Uberlândia, MG</div>
+  </footer>
+
+</div><!-- /page -->
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+<script>
+/* -------------------------------------------------------
+   PARTICLES — floating gold dust
+------------------------------------------------------- */
+(function() {
+  const canvas = document.getElementById('particles-canvas');
+  const ctx    = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+
+  const GOLD_COLORS = [
+    'rgba(201,168,76,',
+    'rgba(232,201,106,',
+    'rgba(245,223,160,',
+    'rgba(180,140,50,',
+  ];
+
+  class Particle {
+    constructor() { this.reset(true); }
+    reset(initial) {
+      this.x  = Math.random() * W;
+      this.y  = initial ? Math.random() * H : H + 10;
+      this.r  = Math.random() * 1.8 + 0.4;
+      this.vx = (Math.random() - .5) * 0.3;
+      this.vy = -(Math.random() * 0.5 + 0.2);
+      this.a  = Math.random() * 0.5 + 0.1;
+      this.color = GOLD_COLORS[Math.floor(Math.random() * GOLD_COLORS.length)];
+      this.twinkle = Math.random() * Math.PI * 2;
+      this.twinkleSpeed = Math.random() * 0.03 + 0.01;
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      this.twinkle += this.twinkleSpeed;
+      this.currentAlpha = this.a * (.6 + .4 * Math.sin(this.twinkle));
+      if (this.y < -10) this.reset(false);
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = this.color + this.currentAlpha + ')';
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < 65; i++) particles.push(new Particle());
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+/* -------------------------------------------------------
+   INTERSECTION OBSERVER — reveal on scroll
+------------------------------------------------------- */
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* -------------------------------------------------------
+   RIPPLE on buttons
+------------------------------------------------------- */
+document.querySelectorAll('.btn, .p-btn').forEach(btn => {
+  btn.addEventListener('pointerdown', function(e) {
+    const rect  = this.getBoundingClientRect();
+    const x     = e.clientX - rect.left;
+    const y     = e.clientY - rect.top;
+    const size  = Math.max(rect.width, rect.height);
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple';
+    ripple.style.cssText = `width:${size}px;height:${size}px;top:${y - size/2}px;left:${x - size/2}px`;
+    this.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 700);
+  });
+});
+
+/* -------------------------------------------------------
+   TILT on product cards (desktop only)
+------------------------------------------------------- */
+if (window.matchMedia('(hover:hover)').matches) {
+  document.querySelectorAll('.p-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r   = card.getBoundingClientRect();
+      const x   = (e.clientX - r.left) / r.width  - .5;
+      const y   = (e.clientY - r.top)  / r.height - .5;
+      card.style.transform = `translateY(-4px) rotateX(${-y*5}deg) rotateY(${x*5}deg) scale(1.015)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+}
+</script>
+
+</body>
+</html>
